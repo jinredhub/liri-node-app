@@ -20,9 +20,9 @@ if (arg1 === "my-tweets"){
 	var params = {screen_name: 'Mike Red'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 	  if (!error) {
-	    // console.log(tweets);
-	   	// console.log(JSON.stringify(tweets, null, 2));
-	   	console.log(tweets[0].text);
+	   	for (var i=0; i<tweets.length; i++){
+	   		console.log("tweet"+i+": ", tweets[i].text);
+	   }
 	  }
 	});
 }
@@ -32,6 +32,9 @@ else if (arg1 === "spotify-this-song"){
 	// A preview link of the song from Spotify
 	// The album that the song is from
 	// * if user didn't provide song, output "The Sign" by Ace of Base
+	if (arg2 === undefined){
+		arg2 = "the sign ace of base";
+	}
 	var spotify = new Spotify({
 	  id: "2c4d0610c6bf4949b28f722bc92848f7",
 	  secret: "fe9b91861db543b09832aece6cf3570a"
@@ -42,7 +45,7 @@ else if (arg1 === "spotify-this-song"){
 	    return console.log('Error occurred: ' + err);
 	  }
 	 
-	console.log(JSON.stringify(data, null, 2)); 
+	// console.log(JSON.stringify(data, null, 2)); 
 	console.log("Artist: ", data.tracks.items[0].album.artists[0].name);
 	console.log("Name of song: ", data.tracks.items[0].name);
 	console.log("Preview link of song: ", data.tracks.items[0].preview_url);
@@ -81,12 +84,33 @@ else if (arg1 === "do-what-it-says"){
 	// use fs to read random.txt file
 	// then run spotify-this-song from random.txt file
 	var fs = require("fs");
-	fs.fileRead("random.txt", "utf-8", function(err, data){
+	fs.readFile("random.txt", "utf-8", function(err, data){
 		if (err){
 			console.log(err);
 		}
 		else{
+			console.log(data);
+			var words = data.split(",");
+			// words.shift();
+			console.log(words);
 
+
+			var spotify = new Spotify({
+			  id: "2c4d0610c6bf4949b28f722bc92848f7",
+			  secret: "fe9b91861db543b09832aece6cf3570a"
+			});
+			 
+			spotify.search({ type: 'track', query: words[1], limit: 1}, function(err, data) {
+			  if (err) {
+			    return console.log('Error occurred: ' + err);
+			  }
+			 
+			// console.log(JSON.stringify(data, null, 2)); 
+			console.log("Artist: ", data.tracks.items[0].album.artists[0].name);
+			console.log("Name of song: ", data.tracks.items[0].name);
+			console.log("Preview link of song: ", data.tracks.items[0].preview_url);
+			console.log("Album: ", data.tracks.items[0].album.name);
+			});
 		}
 	})
 }
