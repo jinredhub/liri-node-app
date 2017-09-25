@@ -12,6 +12,7 @@ var arg1 = process.argv[2];
 //song name or movie name
 var arg2 = process.argv[3];
 
+// user command start here
 if (arg1 === "my-tweets"){
 
 	var client = new Twitter(
@@ -63,21 +64,22 @@ else if (arg1 === "movie-this"){
 	// Actors in the movie.
 	// * if user doesn't type movie in, output data for movie "Mr. Nobody"
 	// * you may use OMDB api key 40e9cece
-	console.log("else if : movie-this");
+	
+	// check if user provide name of movie. if not default to "Mr. Nobody"
+	if (arg2 === undefined){
+		arg2 = "Mr. Nobody";
+	}
 	var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=" + arg2;
 	
 	request(queryURL, function(err, response, body){
-		// console.log(body);
-		console.log(JSON.parse(body).Title);
-		console.log(JSON.parse(body).Year);
-		console.log(JSON.parse(body).imdbRating);
-		console.log(JSON.parse(body).Ratings[0].Value);
-		console.log(JSON.parse(body).Language);
-		console.log(JSON.parse(body).Country);
-		console.log(JSON.parse(body).Plot);
-		console.log(JSON.parse(body).Actors);
-
-
+		console.log("Title: ", JSON.parse(body).Title);
+		console.log("Year came out: ", JSON.parse(body).Year);
+		console.log("IMDB rating: ", JSON.parse(body).imdbRating);
+		console.log("Rotten Tomatoes rating: ", JSON.parse(body).Ratings[0].Value);
+		console.log("Country produced: ", JSON.parse(body).Country);
+		console.log("Language: ", JSON.parse(body).Language);
+		console.log("Plot: ", JSON.parse(body).Plot);
+		console.log("Actors: ", JSON.parse(body).Actors);
 	});
 }
 else if (arg1 === "do-what-it-says"){
@@ -91,7 +93,6 @@ else if (arg1 === "do-what-it-says"){
 		else{
 			console.log(data);
 			var words = data.split(",");
-			// words.shift();
 			console.log(words);
 
 
