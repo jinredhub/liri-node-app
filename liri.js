@@ -28,11 +28,7 @@ if (arg1 === "my-tweets"){
 	});
 }
 else if (arg1 === "spotify-this-song"){
-	// Artist(s)
-	// The song's name
-	// A preview link of the song from Spotify
-	// The album that the song is from
-	// * if user didn't provide song, output "The Sign" by Ace of Base
+	// see if user provide name of song. If not, default to "the sign"
 	if (arg2 === undefined){
 		arg2 = "the sign ace of base";
 	}
@@ -54,18 +50,8 @@ else if (arg1 === "spotify-this-song"){
 	});
 }
 else if (arg1 === "movie-this"){
-	// Title of the movie.
-	// Year the movie came out.
-	// IMDB Rating of the movie.
-	// Rotten Tomatoes Rating of the movie.
-	// Country where the movie was produced.
-	// Language of the movie.
-	// Plot of the movie.
-	// Actors in the movie.
-	// * if user doesn't type movie in, output data for movie "Mr. Nobody"
-	// * you may use OMDB api key 40e9cece
 	
-	// check if user provide name of movie. if not default to "Mr. Nobody"
+	// check if user provide name of movie. if not, default to "Mr. Nobody"
 	if (arg2 === undefined){
 		arg2 = "Mr. Nobody";
 	}
@@ -84,17 +70,16 @@ else if (arg1 === "movie-this"){
 }
 else if (arg1 === "do-what-it-says"){
 	// use fs to read random.txt file
-	// then run spotify-this-song from random.txt file
+	// then run spotify-this-song, get name of song from random.txt file
 	var fs = require("fs");
 	fs.readFile("random.txt", "utf-8", function(err, data){
 		if (err){
 			console.log(err);
 		}
 		else{
-			console.log(data);
+			// console.log(data);
 			var words = data.split(",");
-			console.log(words);
-
+			// console.log(words);
 
 			var spotify = new Spotify({
 			  id: "2c4d0610c6bf4949b28f722bc92848f7",
